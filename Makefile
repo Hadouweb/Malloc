@@ -15,16 +15,18 @@ SRC = 	$(SRCPATH)/main.c\
 OBJ = $(SRC:.c=.o)
 
 ifeq ($(HOSTTYPE),)
-    HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
+LINK = libft_malloc.so
 
 all: $(NAME)
 
 $(NAME): $(LIBNAME) $(OBJ)
 	@$(CC) -o $@ $(LIB) $^
 	@echo "\n\033[39mCompilation done.\033[0m"
+	ln -s $@ libft_malloc.so
 
 $(LIBNAME):
 	@make -C $(LIBFTPATH) -j8
@@ -40,6 +42,7 @@ clean:
 fclean: clean
 	@make -C $(LIBFTPATH) fclean
 	@rm -rf $(NAME)
+	@rm -f $(LINK)
 
 re: fclean all
 
