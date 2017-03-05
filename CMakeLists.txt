@@ -3,7 +3,17 @@ project(malloc)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES
-    auteur)
+include_directories(includes)
+add_subdirectory(libft)
 
-add_executable(malloc ${SOURCE_FILES})
+set(SRCS
+    srcs/main.c
+    )
+
+set(HEADERS
+   includes/malloc.h
+    )
+
+add_executable(malloc ${SRCS} ${HEADERS})
+
+target_link_libraries(malloc ft)
