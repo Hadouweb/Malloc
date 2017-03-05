@@ -2,17 +2,15 @@
 
 
 int		main(void) {
-	void *ptr;
+	char *ptr;
 
-	ptr = mmap(0, 10, PROT_READ | PROT_WRITE, MAP_ANONYMOUS, -1, 0);
+	ptr = (char*)malloc(3);
+	//ptr = mmap(0, 4, PROT_READ | PROT_WRITE, MAP_ANONYMOUS, -1, 0);
 
 	ptr = "lol";
-	printf("%p\n", ptr);
+	//printf("%p\n", ptr);
 
-	int	tab[10] = {0, 23, 150, 255,
-			12, 16,  21, 42};
-
-	print_memory(tab, sizeof(tab));
+	ft_bit_dump(ptr, 8);
 
 	return 0;
 }
