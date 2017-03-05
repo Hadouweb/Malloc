@@ -1,0 +1,3 @@
+cmake-build-debug
+*.o
+libft_malloc_x86_64_Darwin.so
