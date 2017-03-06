@@ -4,7 +4,6 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <sys/resource.h>
-#include <curses.h>
 #include <errno.h>
 #include <stdlib.h>
 
