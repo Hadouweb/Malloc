@@ -1,40 +1,44 @@
 #include "malloc.h"
+#include <execinfo.h>
 
-typedef struct 		s_tiny {
-	int 			f:1;
-	int 			s:4;
-	int 			type:2;
-	char 			m[16];
-}					t_tiny;
+typedef uint32_t t_tiny_block[4];
 
-typedef struct 		s_page {
-	int 			i;
-	char 			o;
-	t_tiny 			tiny[100];
-	struct s_page 	*next;
-}					t_page;
+#define NUM_TINY_BLOCKS	254
+#define SMALL_REGION_SIZE 4096
+#define PAD (SMALL_REGION_SIZE - (NUM_TINY_BLOCKS * sizeof(t_tiny_block) + sizeof(t_block)))
+
+typedef struct 		s_block {
+	t_link			link;
+	unsigned int 	used:1;
+	unsigned int 	size:5;
+	unsigned int	index:9;
+}					t_block;
+
+typedef struct 		s_tiny_region {
+	t_tiny_block 	data[NUM_TINY_BLOCKS];
+	t_block			head_block;
+	uint8_t 		pad[PAD];
+}					t_tiny_region;
 
 int		main(void) {
-	void *ptr1;
-	void *ptr2;
-	void *ptr3;
+	t_tiny_region 	*p1;
+
+	p1 = mmap(0, 1, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	printf("sizeof t_tiny_region: %lu\n", sizeof(t_tiny_region));
+	printf("sizeof t_tiny_block: %lu\n", sizeof(t_tiny_block));
+	printf("sizeof t_block: %lu\n", sizeof(t_block));
+
+	t_block t;
+
+	t.used = 1;
+	t.size = 16;
+	t.index = 256;
 
 
-	ptr1 = malloc(17);
-	ptr2 = malloc(4000);
-	ptr3 = malloc(17);
 
-	printf("%p\n", ptr1);
-	printf("%p\n", ptr2);
-	printf("%p\n", ptr3);
-
-	long delta1 = ptr2 - ptr1;
-	long delta2 = ptr3 - ptr2;
-
-	printf("%ld\n", delta1);
-	printf("%ld\n", delta2);
-
-	show_alloc_mem();
+	printf("used: %lu\n", PAD);
+	printf("size: %d\n", t.size);
+	printf("index: %d\n", t.index);
 
 	return 0;
 }
