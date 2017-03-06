@@ -26,7 +26,8 @@ all: $(NAME)
 $(NAME): $(LIBNAME) $(OBJ)
 	@$(CC) -o $@ $(LIB) $^
 	@echo "\n\033[39mCompilation done.\033[0m"
-	ln -s $@ libft_malloc.so
+	@rm -f $(LINK)
+	@ln -s $(NAME) $(LINK)
 
 $(LIBNAME):
 	@make -C $(LIBFTPATH) -j8
