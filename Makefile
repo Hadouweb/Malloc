@@ -11,6 +11,8 @@ LIB = -L$(LIBFTPATH) -lft
 LIBNAME = $(LIBFTPATH)/libft.a
 
 SRC = 	$(SRCPATH)/main.c\
+        $(SRCPATH)/m_malloc.c\
+        $(SRCPATH)/m_debug.c\
 
 OBJ = $(SRC:.c=.o)
 

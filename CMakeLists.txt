@@ -8,6 +8,8 @@ add_subdirectory(libft)
 
 set(SRCS
     srcs/main.c
+    srcs/m_malloc.c
+    srcs/m_debug.c
     )
 
 set(HEADERS
