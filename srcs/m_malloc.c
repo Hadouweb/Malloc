@@ -4,13 +4,18 @@ void	*get_ptr(enum e_type type) {
 	void	*ptr;
 
 	ptr = NULL;
-	printf("Alloc tiny %s\n", debug_enum(type));
+	if (type)
+		;
+	//printf("Alloc tiny %s\n", debug_enum(type));
 
 	return ptr;
 }
 
-void 	*malloc(size_t size) {
+void 	*m_malloc(size_t size) {
+	t_manager manager;
 	void	*ptr;
+
+	preload_region(&manager);
 
 	ptr = NULL;
 	if (size <= SIZE_TINY_BLOCK) {

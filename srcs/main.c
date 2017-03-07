@@ -8,20 +8,25 @@ int		main(void) {
 	printf("sizeof t_small_region: %lu\n", sizeof(t_small_region));
 	printf("sizeof t_tiny_block: %lu\n", sizeof(t_tiny_block));
 	printf("sizeof t_small_block: %lu\n", sizeof(t_small_block));
-	printf("sizeof t_block: %lu\n\n", sizeof(t_block));
+	printf("sizeof t_block: %lu\n", sizeof(t_block));
+	printf("sizeof info_block: %lu\n", sizeof(p1->info_block));
+	printf("sizeof data: %lu\n\n", sizeof(p1->data));
 	//printf("sizeof pad tiny: %lu\n", PAD_TINY);
+	printf("sizeof PAD_REG_TINY: %d\n", PAD_REG_TINY);
 	printf("sizeof PAD_TINY: %d\n", PAD_TINY);
 	printf("sizeof PAD_SMALL: %d\n", PAD_SMALL);
-	t_block t;
 
-	t.used = 1;
-	t.size = 16;
-	t.index = 256;
 
-	printf("size: %d\n", t.size);
-	printf("index: %d\n", t.index);
 
-	malloc(1);
+	t_tiny_region t;
+
+	t.current_index = 64510;
+	t.nb_used = 64510;
+
+	//printf("current_index: %d\n", t.current_index);
+	//printf("nb_used: %d\n", t.nb_used);
+
+	m_malloc(1);
 
 	return 0;
 }

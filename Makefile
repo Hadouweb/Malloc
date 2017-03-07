@@ -13,6 +13,7 @@ LIBNAME = $(LIBFTPATH)/libft.a
 SRC = 	$(SRCPATH)/main.c\
         $(SRCPATH)/m_malloc.c\
         $(SRCPATH)/m_debug.c\
+        $(SRCPATH)/m_region.c\
 
 OBJ = $(SRC:.c=.o)
 

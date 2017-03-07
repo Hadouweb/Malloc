@@ -10,6 +10,7 @@ set(SRCS
     srcs/main.c
     srcs/m_malloc.c
     srcs/m_debug.c
+    srcs/m_region.c
     )
 
 set(HEADERS
