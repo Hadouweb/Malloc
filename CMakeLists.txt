@@ -10,7 +10,12 @@ set(SRCS
     srcs/main.c
     srcs/m_malloc.c
     srcs/m_debug.c
-    srcs/m_region.c
+    srcs/m_alloc.c
+    srcs/m_error.c
+    srcs/m_get_tiny.c
+    srcs/m_get_small.c
+    srcs/m_get_large.c
+    srcs/m_show_alloc.c
     )
 
 set(HEADERS
