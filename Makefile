@@ -1,5 +1,5 @@
-CC = gcc -Werror -Wextra -Wall -g
-
+CC = gcc
+FLAG = -Werror -Wextra -Wall -g
 SRCPATH = ./srcs
 INCPATH = ./includes
 
@@ -18,6 +18,7 @@ SRC =   $(SRCPATH)/m_malloc.c\
         $(SRCPATH)/m_get_small.c\
         $(SRCPATH)/m_get_large.c\
         $(SRCPATH)/m_show_alloc.c\
+        $(SRCPATH)/m_util.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -40,7 +41,7 @@ $(LIBNAME):
 	@make -C $(LIBFTPATH) -j8
 
 %.o: %.c
-	@$(CC) -o $@ -c $< $(HEADER)
+	@$(CC) -fPIC -o $@ -c $< $(HEADER)
 	@echo "\033[34m█\033[0m\c"
 
 clean:

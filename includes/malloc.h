@@ -37,8 +37,8 @@ enum	e_type {
 typedef uint8_t		t_tiny_block[SIZE_TINY_BLOCK];
 typedef uint8_t		t_small_block[SIZE_SMALL_BLOCK];
 
-# define NUM_TINY_BLOCKS  64510
-# define NUM_SMALL_BLOCKS 16376
+# define NUM_TINY_BLOCKS 1000
+# define NUM_SMALL_BLOCKS 1000
 # define PAGE_SIZE 4096
 
 # define S_TINY_DATA (NUM_TINY_BLOCKS * SIZE_TINY_BLOCK)
@@ -92,10 +92,9 @@ typedef struct		s_large_block {
 }					t_large_block;
 
 typedef struct		s_manager {
-	t_list			*tiny_list;
-	t_list			*small_list;
-	t_list			*large_list;
-	t_list			*free_list;
+	t_list			tiny_list;
+	t_list			small_list;
+	t_list			large_list;
 }					t_manager;
 
 t_manager			g_manager;
@@ -114,6 +113,9 @@ void				preload_region(void);
 t_tiny_region		*alloc_tiny_region(void);
 t_small_region		*alloc_small_region(void);
 t_large_block		*alloc_large_block(size_t size);
+
+void				print_addr(void *ptr);
+void				list_push_back(t_list *list, t_link *link);
 
 void				error_exit(char *str);
 

@@ -1,9 +1,9 @@
 #include "malloc.h"
 
 static void print_ptr(void *start, size_t size) {
-	ft_print_addr(start);
+	print_addr(start);
 	ft_putstr(" - ");
-	ft_print_addr(start + size);
+	print_addr(start + size);
 	ft_putstr(" : ");
 	ft_putnbr(size);
 	if (size == 1)
@@ -20,7 +20,7 @@ static void show_tiny_region(t_link *list_region) {
 	if (region->nb_used == 0)
 		return ;
 	ft_putstr("TINY : ");
-	ft_print_addr(region);
+	print_addr(region);
 	ft_putstr("\n");
 	while (list_region)
 	{
@@ -43,7 +43,7 @@ static void show_small_region(t_link *list_region) {
 	if (region->nb_used == 0)
 		return ;
 	ft_putstr("SMALL : ");
-	ft_print_addr(region);
+	print_addr(region);
 	ft_putstr("\n");
 	while (list_region)
 	{
@@ -63,7 +63,7 @@ static void show_large_block(t_link *list_region) {
 
 	block = PTR_NODE(list_region, t_large_block, link);
 	ft_putstr("LARGE : ");
-	ft_print_addr(block);
+	print_addr(block);
 	ft_putstr("\n");
 	while (list_region)
 	{
@@ -74,10 +74,10 @@ static void show_large_block(t_link *list_region) {
 }
 
 void		show_alloc_mem(void) {
-	if (g_manager.tiny_list != NULL)
-		show_tiny_region(g_manager.tiny_list->head);
-	if (g_manager.small_list != NULL)
-		show_small_region(g_manager.small_list->head);
-	if (g_manager.large_list != NULL)
-		show_large_block(g_manager.large_list->head);
+	if (g_manager.tiny_list.head != NULL)
+		show_tiny_region(g_manager.tiny_list.head);
+	if (g_manager.small_list.head != NULL)
+		show_small_region(g_manager.small_list.head);
+	if (g_manager.large_list.head != NULL)
+		show_large_block(g_manager.large_list.head);
 }

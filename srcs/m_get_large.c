@@ -6,7 +6,7 @@ void			*get_ptr_large(size_t size) {
 
 	block = alloc_large_block(size);
 	ptr = block->data;
-	ft_list_push_back(&g_manager.large_list, &block->link);
+	list_push_back(&g_manager.large_list, &block->link);
 
 	return ptr;
 }

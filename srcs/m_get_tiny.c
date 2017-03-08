@@ -30,7 +30,7 @@ void			*get_ptr_tiny(size_t size) {
 
 	ptr = NULL;
 
-	list_region = g_manager.tiny_list->head;
+	list_region = g_manager.tiny_list.head;
 	while (list_region)
 	{
 		region = PTR_NODE(list_region, t_tiny_region, link);
