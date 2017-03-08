@@ -48,9 +48,11 @@ t_small_region		*alloc_small_region(void) {
 t_large_block		*alloc_large_block(size_t size) {
 	t_large_block	*large_block;
 	size_t 			delta;
+	size_t 			align;
 
 	delta = sizeof(t_large_block) - sizeof(void*);
-	large_block = mmap(0, delta + size, PROT_READ | PROT_WRITE,
+	align = PAD_GOAL(delta + size);
+	large_block = mmap(0, align, PROT_READ | PROT_WRITE,
 	MAP_ANON | MAP_PRIVATE, -1, 0);
 
 	if (large_block != MAP_FAILED) {
@@ -58,6 +60,8 @@ t_large_block		*alloc_large_block(size_t size) {
 		large_block->used = 1;
 		large_block->size = size;
 		large_block->data = large_block + delta;
+		g_manager.size_unused = align;
+		keep_unused_mem((void*)large_block + delta + size, size + delta);
 	}
 
 	return large_block;

@@ -85,8 +85,8 @@ typedef struct		s_small_region {
 
 typedef struct		s_large_block {
 	uint32_t		header_prot;
-	char			used:1;
-	uint64_t		size;
+	char			used;
+	size_t			size;
 	t_link			link;
 	void			*data;
 }					t_large_block;
@@ -95,6 +95,7 @@ typedef struct		s_manager {
 	t_list			tiny_list;
 	t_list			small_list;
 	t_list			large_list;
+	int 			size_unused;
 }					t_manager;
 
 t_manager			g_manager;
@@ -112,6 +113,9 @@ void				*get_ptr_large(size_t size);
 void				preload_region(void);
 t_tiny_region		*alloc_tiny_region(void);
 t_small_region		*alloc_small_region(void);
+
+void 				keep_unused_mem(void *ptr, size_t size);
+t_large_block		*find_large_block(size_t size);
 t_large_block		*alloc_large_block(size_t size);
 
 void				print_addr(void *ptr);

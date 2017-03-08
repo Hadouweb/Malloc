@@ -2,10 +2,10 @@
 #include <stdio.h>
 
 int		main(void) {
-	t_tiny_region 	*p1;
+	/*t_tiny_region 	*p1;
 	t_small_region	*p2;
 
-	p1 = mmap(0, 1290248, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	p1 = mmap(0, 4000, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	printf("sizeof t_tiny_region: %lu\n", sizeof(t_tiny_region));
 	printf("sizeof t_small_region: %lu\n", sizeof(t_small_region));
 	printf("sizeof t_tiny_block: %lu\n", sizeof(t_tiny_block));
@@ -24,16 +24,21 @@ int		main(void) {
 	printf("sizeof PAD_TINY: %d\n", PAD_TINY);
 	printf("sizeof PAD_SMALL: %d\n", PAD_SMALL);
 
-	printf("RUN\n");
+	printf("RUN\n");*/
+
+	//printf("%ld\n", 0x10f9db528 - 0x10f9d1000);
 
 	int i = 0;
 	while (i < 1024) {
-		//char *ptr = malloc(500);
-		//ptr[0] = 42;
+		char *ptr = malloc(1024);
+		ptr[0] = 42;
 		i++;
 	}
-
 	//show_alloc_mem();
+
+	/*char *ptr = malloc(1);
+	ptr[0] = 'a';
+	printf("%s\n", ptr);*/
 
 	return 0;
 }
