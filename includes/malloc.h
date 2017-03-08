@@ -47,11 +47,10 @@ typedef uint8_t		t_small_block[SIZE_SMALL_BLOCK];
 # define S_SMALL_DATA (NUM_SMALL_BLOCKS * SIZE_SMALL_BLOCK)
 # define S_SMALL_INFO (NUM_SMALL_BLOCKS * sizeof(t_block))
 
-# define S_TOKEN sizeof(uint32_t) * 2
-# define S_LINK sizeof(t_link)
+# define S_TOKEN sizeof(uint32_t) * 2 + sizeof(t_link)
 
-# define PAD_REG_TINY (int)(S_TINY_DATA + S_TINY_INFO + S_TOKEN + S_LINK)
-# define PAD_REG_SMALL (int)(S_SMALL_DATA + S_SMALL_INFO + S_TOKEN + S_LINK)
+# define PAD_REG_TINY (int)(S_TINY_DATA + S_TINY_INFO + S_TOKEN)
+# define PAD_REG_SMALL (int)(S_SMALL_DATA + S_SMALL_INFO + S_TOKEN)
 
 # define AC(X) (((double)X) / (double)PAGE_SIZE)
 # define COEF(X) (int)((AC(X) == (int)AC(X)) ? AC(X) : AC(X) + 1)
@@ -60,8 +59,8 @@ typedef uint8_t		t_small_block[SIZE_SMALL_BLOCK];
 # define PAD_SMALL (PAD_GOAL(PAD_REG_SMALL) - (PAD_REG_SMALL))
 
 typedef struct		s_block {
-	unsigned int	used:1;
-	unsigned int	size:31;
+	uint32_t		used:1;
+	uint32_t		size:31;
 }					t_block;
 
 typedef struct		s_tiny_region {
@@ -96,14 +95,15 @@ typedef struct		s_manager {
 	t_list			*tiny_list;
 	t_list			*small_list;
 	t_list			*large_list;
+	t_list			*free_list;
 }					t_manager;
 
 t_manager			g_manager;
 
 void				show_alloc_mem(void);
 void				show_alloc_mem_ex(void);
-void				m_free(void *ptr); 		// A changer free
-void				*m_malloc(size_t size); // A changer malloc
+void				free(void *ptr); 		// A changer free
+void				*malloc(size_t size); // A changer malloc
 void				*realloc(void *ptr, size_t size);
 
 void				*get_ptr_tiny(size_t size);

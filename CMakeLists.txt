@@ -7,7 +7,7 @@ include_directories(includes)
 add_subdirectory(libft)
 
 set(SRCS
-    srcs/main.c
+    main.c
     srcs/m_malloc.c
     srcs/m_debug.c
     srcs/m_alloc.c

@@ -38,11 +38,11 @@ void			*get_ptr_tiny(size_t size) {
 			break;
 		list_region = list_region->next;
 	}
-
 	if (region->nb_used < NUM_TINY_BLOCKS) {
 		ptr = find_ptr_tiny(region, size);
 	} else {
 		// new Region tiny
 	}
+
 	return ptr;
 }

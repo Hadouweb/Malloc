@@ -11,6 +11,8 @@ void				preload_region(void) {
 	if (small_region == MAP_FAILED)
 		error_exit("can't allocate region MAP_FAILED\n");
 
+	printf("ok\n");
+
 	ft_list_push_back(&g_manager.tiny_list, &tiny_region->link);
 	ft_list_push_back(&g_manager.small_list, &small_region->link);
 }

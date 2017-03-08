@@ -10,8 +10,7 @@ HEADER = -I $(LIBFTPATH)/includes -I $(INCPATH)
 LIB = -L$(LIBFTPATH) -lft
 LIBNAME = $(LIBFTPATH)/libft.a
 
-SRC = 	$(SRCPATH)/main.c\
-        $(SRCPATH)/m_malloc.c\
+SRC =   $(SRCPATH)/m_malloc.c\
         $(SRCPATH)/m_debug.c\
         $(SRCPATH)/m_alloc.c\
         $(SRCPATH)/m_error.c\
@@ -32,7 +31,7 @@ LINK = libft_malloc.so
 all: $(NAME)
 
 $(NAME): $(LIBNAME) $(OBJ)
-	@$(CC) -o $@ $(LIB) $^
+	@$(CC) -shared $(LIB) -o $(NAME) $^
 	@echo "\n\033[39mCompilation done.\033[0m"
 	@rm -f $(LINK)
 	@ln -s $(NAME) $(LINK)
