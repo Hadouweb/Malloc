@@ -51,7 +51,8 @@ t_large_block		*alloc_large_block(size_t size) {
 	size_t 			align;
 
 	delta = sizeof(t_large_block) - sizeof(void*);
-	align = PAD_GOAL(delta + size);
+	align = PAD_GOAL(delta + size) * 8;
+	//printf("align %zu\n", align);
 	large_block = mmap(0, align, PROT_READ | PROT_WRITE,
 	MAP_ANON | MAP_PRIVATE, -1, 0);
 
@@ -59,9 +60,9 @@ t_large_block		*alloc_large_block(size_t size) {
 		large_block->header_prot = MAGIC_PROT;
 		large_block->used = 1;
 		large_block->size = size;
-		large_block->data = large_block + delta;
-		g_manager.size_unused = align;
-		keep_unused_mem((void*)large_block + delta + size, size + delta);
+		large_block->data = (void*)large_block + delta;
+		g_manager.size_unused = align - size + delta;
+		keep_unused_mem((void*)large_block + delta + size);
 	}
 
 	return large_block;
