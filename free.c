@@ -96,7 +96,8 @@ static void		set_block(void *ptr)
 	}
 }
 
-void			free(void *ptr)
+void			m_free(void *ptr)
 {
-	set_block(ptr);
+	printf("LOL\n");
+	//set_block(ptr);
 }

@@ -1,25 +1,22 @@
 CC = gcc
 FLAG = -Werror -Wextra -Wall -g
-SRCPATH = ./srcs
-INCPATH = ./includes
-
 LIBFTPATH = ./libft
 
-HEADER = -I $(LIBFTPATH)/includes -I $(INCPATH)
+HEADER = -I $(LIBFTPATH)/includes
 
 LIB = -L$(LIBFTPATH) -lft
 LIBNAME = $(LIBFTPATH)/libft.a
 
-SRC =   $(SRCPATH)/m_malloc.c\
-        $(SRCPATH)/m_debug.c\
-        $(SRCPATH)/m_alloc.c\
-        $(SRCPATH)/m_error.c\
-        $(SRCPATH)/m_get_tiny.c\
-        $(SRCPATH)/m_get_small.c\
-        $(SRCPATH)/m_get_large.c\
-        $(SRCPATH)/m_show_alloc.c\
-        $(SRCPATH)/m_util.c\
-        $(SRCPATH)/m_free.c\
+SRC =   malloc.c\
+        debug.c\
+        alloc.c\
+        error.c\
+        get_tiny.c\
+        get_small.c\
+        get_large.c\
+        show_alloc.c\
+        util.c\
+        free.c\
 
 OBJ = $(SRC:.c=.o)
 

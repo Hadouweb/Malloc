@@ -68,7 +68,8 @@ static void show_large_block(t_link *list_region) {
 	while (list_region)
 	{
 		block = PTR_NODE(list_region, t_large_block, link);
-		print_ptr(block->data, block->size);
+		if (block->used == 1)
+			print_ptr(block->data, block->size);
 		list_region = list_region->next;
 	}
 }

@@ -3,25 +3,24 @@ project(malloc)
 
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(includes)
 add_subdirectory(libft)
 
 set(SRCS
     main.c
-    srcs/m_malloc.c
-    srcs/m_debug.c
-    srcs/m_alloc.c
-    srcs/m_error.c
-    srcs/m_get_tiny.c
-    srcs/m_get_small.c
-    srcs/m_get_large.c
-    srcs/m_show_alloc.c
-    srcs/m_util.c
-    srcs/m_free.c
+    malloc.c
+    debug.c
+    alloc.c
+    error.c
+    get_tiny.c
+    get_small.c
+    get_large.c
+    show_alloc.c
+    util.c
+    free.c
     )
 
 set(HEADERS
-   includes/malloc.h
+        malloc.h
     )
 
 add_executable(malloc ${SRCS} ${HEADERS})

@@ -20,7 +20,7 @@
 # include <stdlib.h>
 
 # include <stdio.h>
-# include "libft.h"
+# include "libft/includes/libft.h"
 
 
 
@@ -31,16 +31,15 @@ enum	e_type {
 };
 
 # define MAGIC_PROT (1 << 31)
-# define SIZE_TINY_BLOCK 16
-# define SIZE_SMALL_BLOCK 512
+# define SIZE_TINY_BLOCK 1024
+# define SIZE_SMALL_BLOCK 32768
 
 typedef uint8_t		t_tiny_block[SIZE_TINY_BLOCK];
 typedef uint8_t		t_small_block[SIZE_SMALL_BLOCK];
 
 # define NUM_TINY_BLOCKS 1024
 # define NUM_SMALL_BLOCKS 1024
-# define NUM_LARGE_BLOCKS 1024
-# define PAGE_SIZE 4096
+# define PAGE_SIZE getpagesize()
 
 # define S_TINY_DATA (NUM_TINY_BLOCKS * SIZE_TINY_BLOCK)
 # define S_TINY_INFO (NUM_TINY_BLOCKS * sizeof(t_block))
@@ -72,7 +71,6 @@ typedef struct		s_tiny_region {
 	uint32_t 		current_index:16;
 	uint32_t 		nb_used:16;
 	t_link			link;
-	uint8_t			pad[PAD_TINY];
 }					t_tiny_region;
 
 typedef struct		s_small_region {
@@ -81,12 +79,10 @@ typedef struct		s_small_region {
 	uint32_t 		current_index:16;
 	uint32_t 		nb_used:16;
 	t_link			link;
-	uint8_t			pad[PAD_SMALL];
 }					t_small_region;
 
 typedef struct		s_large_block {
-	char			used:1;
-	char 			chunk_index:7;
+	uint8_t			used;
 	size_t			size;
 	t_link			link;
 	void			*data;
@@ -96,18 +92,13 @@ typedef struct		s_manager {
 	t_list			tiny_list;
 	t_list			small_list;
 	t_list			large_list;
-	void 			*pool_block_large;
-	uint32_t 		index_pool;
-	void			*ptr_rest;
-	long			size_rest;
-	char 			chunk_index;
 }					t_manager;
 
 t_manager			g_manager;
 
 void				show_alloc_mem(void);
 void				show_alloc_mem_ex(void);
-void				free(void *ptr);
+void				m_free(void *ptr);
 void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);
 
@@ -118,10 +109,6 @@ void				*get_ptr_large(size_t size);
 void				preload_region(void);
 t_tiny_region		*alloc_tiny_region(void);
 t_small_region		*alloc_small_region(void);
-
-void				keep_rest_large_block(size_t size, void *ptr);
-t_large_block		*get_large_block(void);
-void				alloc_pool_block_large(void);
 t_large_block		*alloc_large_block(size_t size);
 
 void				print_addr(void *ptr);
