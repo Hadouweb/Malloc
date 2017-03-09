@@ -39,6 +39,7 @@ typedef uint8_t		t_small_block[SIZE_SMALL_BLOCK];
 
 # define NUM_TINY_BLOCKS 1024
 # define NUM_SMALL_BLOCKS 1024
+# define NUM_LARGE_BLOCKS 1024
 # define PAGE_SIZE 4096
 
 # define S_TINY_DATA (NUM_TINY_BLOCKS * SIZE_TINY_BLOCK)
@@ -58,6 +59,8 @@ typedef uint8_t		t_small_block[SIZE_SMALL_BLOCK];
 # define PAD_TINY (PAD_GOAL(PAD_REG_TINY) - (PAD_REG_TINY))
 # define PAD_SMALL (PAD_GOAL(PAD_REG_SMALL) - (PAD_REG_SMALL))
 
+# define SIZE_LARGE_BLOCK sizeof(t_large_block)
+
 typedef struct		s_block {
 	uint32_t		used:1;
 	uint32_t		size:31;
@@ -65,7 +68,6 @@ typedef struct		s_block {
 
 typedef struct		s_tiny_region {
 	t_tiny_block	data[NUM_TINY_BLOCKS];
-	uint32_t		header_prot;
 	t_block			info_block[NUM_TINY_BLOCKS];
 	uint32_t 		current_index:16;
 	uint32_t 		nb_used:16;
@@ -75,7 +77,6 @@ typedef struct		s_tiny_region {
 
 typedef struct		s_small_region {
 	t_small_block	data[NUM_SMALL_BLOCKS];
-	uint32_t		header_prot;
 	t_block			info_block[NUM_SMALL_BLOCKS];
 	uint32_t 		current_index:16;
 	uint32_t 		nb_used:16;
@@ -84,8 +85,8 @@ typedef struct		s_small_region {
 }					t_small_region;
 
 typedef struct		s_large_block {
-	uint32_t		header_prot;
-	char			used;
+	char			used:1;
+	char 			chunk_index:7;
 	size_t			size;
 	t_link			link;
 	void			*data;
@@ -95,15 +96,19 @@ typedef struct		s_manager {
 	t_list			tiny_list;
 	t_list			small_list;
 	t_list			large_list;
-	size_t 			size_unused;
+	void 			*pool_block_large;
+	uint32_t 		index_pool;
+	void			*ptr_rest;
+	long			size_rest;
+	char 			chunk_index;
 }					t_manager;
 
 t_manager			g_manager;
 
 void				show_alloc_mem(void);
 void				show_alloc_mem_ex(void);
-void				free(void *ptr); 		// A changer free
-void				*malloc(size_t size); // A changer malloc
+void				free(void *ptr);
+void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);
 
 void				*get_ptr_tiny(size_t size);
@@ -114,8 +119,9 @@ void				preload_region(void);
 t_tiny_region		*alloc_tiny_region(void);
 t_small_region		*alloc_small_region(void);
 
-void 				keep_unused_mem(void *ptr);
-t_large_block		*find_large_block(size_t size);
+void				keep_rest_large_block(size_t size, void *ptr);
+t_large_block		*get_large_block(void);
+void				alloc_pool_block_large(void);
 t_large_block		*alloc_large_block(size_t size);
 
 void				print_addr(void *ptr);

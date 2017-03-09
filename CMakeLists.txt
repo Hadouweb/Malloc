@@ -16,7 +16,8 @@ set(SRCS
     srcs/m_get_small.c
     srcs/m_get_large.c
     srcs/m_show_alloc.c
-    srcs/m_show_alloc.c
+    srcs/m_util.c
+    srcs/m_free.c
     )
 
 set(HEADERS

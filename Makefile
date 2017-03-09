@@ -19,6 +19,7 @@ SRC =   $(SRCPATH)/m_malloc.c\
         $(SRCPATH)/m_get_large.c\
         $(SRCPATH)/m_show_alloc.c\
         $(SRCPATH)/m_util.c\
+        $(SRCPATH)/m_free.c\
 
 OBJ = $(SRC:.c=.o)
 
