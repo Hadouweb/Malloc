@@ -54,7 +54,7 @@ typedef uint8_t		t_small_block[SIZE_SMALL_BLOCK];
 
 # define AC(X) (((double)X) / (double)PAGE_SIZE)
 # define COEF(X) (int)((AC(X) == (int)AC(X)) ? AC(X) : AC(X) + 1)
-# define PAD_GOAL(X) (PAGE_SIZE) * COEF(X)
+# define PAD_GOAL(X) (size_t)(PAGE_SIZE) * COEF(X)
 # define PAD_TINY (PAD_GOAL(PAD_REG_TINY) - (PAD_REG_TINY))
 # define PAD_SMALL (PAD_GOAL(PAD_REG_SMALL) - (PAD_REG_SMALL))
 

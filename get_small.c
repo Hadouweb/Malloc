@@ -38,6 +38,8 @@ void			*get_ptr_small(size_t size) {
 	}
 	if (list_region == NULL)
 		region = load_small_region();
+	if (region == MAP_FAILED)
+		return NULL;
 	ptr = find_ptr_small(region, size);
 	return ptr;
 }

@@ -5,6 +5,8 @@ void		free_tiny_block(t_tiny_region *region, void *ptr)
 	int 			index;
 
 	index = (ptr - (void*)region) / SIZE_TINY_BLOCK;
+	if (region->data[index] != ptr)
+		return ;
 	region->info_block[index].size = 0;
 	region->info_block[index].used = 0;
 	region->nb_used--;
@@ -16,6 +18,8 @@ void		free_small_block(t_small_region *region, void *ptr)
 	int 			index;
 
 	index = (ptr - (void*)region) / SIZE_SMALL_BLOCK;
+	if (region->data[index] != ptr)
+		return ;
 	region->info_block[index].size = 0;
 	region->info_block[index].used = 0;
 	region->nb_used--;
@@ -38,7 +42,6 @@ void		free(void *ptr)
 	t_small_region	*region_small;
 	t_large_block	*block_large;
 
-	//ft_putstr("MY FREE\n");
 	if (ptr == NULL)
 		return ;
 	region_tiny = find_on_tiny(ptr);
@@ -56,5 +59,4 @@ void		free(void *ptr)
 	block_large = find_on_large(ptr);
 	if (block_large != NULL)
 		free_large_block(block_large, ptr);
-	//ft_putstr("MY FREE 2\n");
 }

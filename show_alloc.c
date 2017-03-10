@@ -50,7 +50,7 @@ static void show_small_region(t_link *list_region) {
 		i = 0;
 		region = PTR_NODE(list_region, t_small_region, link);
 		while (i < NUM_SMALL_BLOCKS) {
-			if (region->info_block[i].used == 1)
+			if (region->info_block[i].used == 1 && i == 0)
 				print_ptr(region->data[i], region->info_block[i].size);
 			i++;
 		}
@@ -75,6 +75,13 @@ static void show_large_block(t_link *list_region) {
 }
 
 void		show_alloc_mem(void) {
+	ft_putstr("nb tiny region: ");
+	ft_putnbr(g_manager.tiny_list.size);
+	ft_putstr("\nnb small region: ");
+	ft_putnbr(g_manager.small_list.size);
+	ft_putstr("\nnb large block: ");
+	ft_putnbr(g_manager.large_list.size);
+
 	if (g_manager.tiny_list.head != NULL)
 		show_tiny_region(g_manager.tiny_list.head);
 	if (g_manager.small_list.head != NULL)

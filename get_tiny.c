@@ -42,6 +42,8 @@ void			*get_ptr_tiny(size_t size)
 
 	if (list_region == NULL)
 		region = load_tiny_region();
+	if (region == MAP_FAILED)
+		return NULL;
 	ptr = find_ptr_tiny(region, size);
 	return ptr;
 }
