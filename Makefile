@@ -9,7 +9,9 @@ LIBNAME = $(LIBFTPATH)/libft.a
 
 SRC =   malloc.c\
         debug.c\
-        alloc.c\
+        alloc_tiny.c\
+        alloc_small.c\
+        alloc_large.c\
         error.c\
         get_tiny.c\
         get_small.c\
@@ -17,6 +19,8 @@ SRC =   malloc.c\
         show_alloc.c\
         util.c\
         free.c\
+        find_ptr.c\
+        realloc.c\
 
 OBJ = $(SRC:.c=.o)
 

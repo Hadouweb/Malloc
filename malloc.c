@@ -6,14 +6,11 @@ void 	*malloc(size_t size) {
 	//printf("My Malloc\n");
 
 	ptr = NULL;
-	if (size > 0 && size <= SIZE_TINY_BLOCK) {
-		if (g_manager.tiny_list.head == NULL && g_manager.small_list.head == NULL)
-			preload_region();
+	if (size > 0 && size <= SIZE_TINY_BLOCK)
 		ptr = get_ptr_tiny(size);
-	}
 	else if (size > SIZE_TINY_BLOCK && size <= SIZE_SMALL_BLOCK) {
-		if (g_manager.tiny_list.head == NULL && g_manager.small_list.head == NULL)
-			preload_region();
+		if (g_manager.small_list.head == NULL)
+			load_small_region();
 		ptr = get_ptr_small(size);
 	}
 	else if (size > 0 && size > SIZE_SMALL_BLOCK)

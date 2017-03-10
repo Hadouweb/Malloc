@@ -98,20 +98,32 @@ t_manager			g_manager;
 
 void				show_alloc_mem(void);
 void				show_alloc_mem_ex(void);
-void				m_free(void *ptr);
+void				free(void *ptr);
 void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);
+
+void				free_tiny_block(t_tiny_region *region, void *ptr);
+void				free_small_block(t_small_region *region, void *ptr);
+void				free_large_block(t_large_block *block, void *ptr);
+
+void				*find_on_tiny(void *ptr);
+void				*find_on_small(void *ptr);
+void				*find_on_large(void *ptr);
 
 void				*get_ptr_tiny(size_t size);
 void				*get_ptr_small(size_t size);
 void				*get_ptr_large(size_t size);
 
-void				preload_region(void);
+t_tiny_region		*load_tiny_region(void);
 t_tiny_region		*alloc_tiny_region(void);
+
+t_small_region		*load_small_region(void);
 t_small_region		*alloc_small_region(void);
+
 t_large_block		*alloc_large_block(size_t size);
 
 void				print_addr(void *ptr);
+void				list_pop_node(t_list *list, t_link *link);
 void				list_push_back(t_list *list, t_link *link);
 
 void				error_exit(char *str);

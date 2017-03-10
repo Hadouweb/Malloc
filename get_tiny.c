@@ -1,6 +1,7 @@
 #include "malloc.h"
 
-static void		*find_ptr_tiny(t_tiny_region * r, size_t size) {
+static void		*find_ptr_tiny(t_tiny_region * r, size_t size)
+{
 	int 	current_index;
 
 	current_index = r->current_index;
@@ -23,13 +24,13 @@ static void		*find_ptr_tiny(t_tiny_region * r, size_t size) {
 	return NULL;
 }
 
-void			*get_ptr_tiny(size_t size) {
+void			*get_ptr_tiny(size_t size)
+{
 	t_link			*list_region;
 	t_tiny_region 	*region;
 	void			*ptr;
 
-	ptr = NULL;
-
+	region = NULL;
 	list_region = g_manager.tiny_list.head;
 	while (list_region)
 	{
@@ -38,11 +39,9 @@ void			*get_ptr_tiny(size_t size) {
 			break;
 		list_region = list_region->next;
 	}
-	if (region->nb_used < NUM_TINY_BLOCKS) {
-		ptr = find_ptr_tiny(region, size);
-	} else {
-		// new Region tiny
-	}
 
+	if (list_region == NULL)
+		region = load_tiny_region();
+	ptr = find_ptr_tiny(region, size);
 	return ptr;
 }

@@ -55,3 +55,23 @@ void	list_push_back(t_list *list, t_link *link)
 	list->tail = link;
 	list->size++;
 }
+
+void	list_pop_node(t_list *list, t_link *link)
+{
+	t_link	*prev;
+	t_link	*next;
+
+	if (link == NULL)
+		return ;
+	prev = link->prev;
+	next = link->next;
+	if (list->head == link)
+		list->head = next;
+	if (list->tail == link)
+		list->tail = prev;
+	if (prev != NULL)
+		prev->next = next;
+	if (next != NULL)
+		next->prev = prev;
+	list->size--;
+}

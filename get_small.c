@@ -28,21 +28,16 @@ void			*get_ptr_small(size_t size) {
 	t_small_region 	*region;
 	void			*ptr;
 
-	ptr = NULL;
-
 	list_region = g_manager.small_list.head;
 	while (list_region)
 	{
 		region = PTR_NODE(list_region, t_small_region, link);
-		if (region->nb_used < NUM_TINY_BLOCKS)
+		if (region->nb_used < NUM_SMALL_BLOCKS)
 			break;
 		list_region = list_region->next;
 	}
-
-	if (region->nb_used < NUM_TINY_BLOCKS) {
-		ptr = find_ptr_small(region, size);
-	} else {
-		// new Region tiny
-	}
+	if (list_region == NULL)
+		region = load_small_region();
+	ptr = find_ptr_small(region, size);
 	return ptr;
 }

@@ -25,7 +25,7 @@ def page_reclaims(prog):
     if m:
         found = m.group(1)
         return int(found)
-    return ""
+    return 0
 
 def cmd_output(com):
     pipe = cmd.Popen(com, stdout=cmd.PIPE, stderr=cmd.PIPE)
@@ -40,6 +40,9 @@ def cmd_output_only(com):
 def cmp_output(prog, to_compare):
     com = "./run.sh ./" + bin_folder + prog
     output = cmd_output(com.split())
+    #print(output)
+    #for o in output:
+    #    print(o)
     if output[0] == to_compare:
         print("OK")
     else:

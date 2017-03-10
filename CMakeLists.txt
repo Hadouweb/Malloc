@@ -9,7 +9,9 @@ set(SRCS
     main.c
     malloc.c
     debug.c
-    alloc.c
+    alloc_tiny.c
+    alloc_small.c
+    alloc_large.c
     error.c
     get_tiny.c
     get_small.c
@@ -17,6 +19,8 @@ set(SRCS
     show_alloc.c
     util.c
     free.c
+    find_ptr.c
+    realloc.c
     )
 
 set(HEADERS

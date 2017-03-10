@@ -1,7 +1,7 @@
 #include "malloc.h"
 
-
-void			*get_ptr_large(size_t size) {
+void			*get_ptr_large(size_t size)
+{
 	t_large_block 	*block;
 	void			*ptr;
 

@@ -1,4 +1,6 @@
-#include <malloc.h>
+#include "malloc.h"
+
+#define M1 (1024 * 1024)
 
 int		main(void) {
 	/*t_tiny_region 	*p1;
@@ -20,20 +22,27 @@ int		main(void) {
 	printf("RUN\n");*/
 
 	//printf("%ld\n", 0x106815280 - 0x106721028);
-	int i = 0;
-	while (i < 100) {
-		char *ptr = malloc(1024);
-		ptr[1000] = 42;
-		m_free(ptr);
+	/*int i = 0;
+	while (i < 1000) {
+		char *ptr = malloc(33024);
+		ptr[1023] = 42;
+		free(ptr);
 		//char *ptr2 = malloc(5001);
 		//ptr2[5000] = 42;
 		i++;
-	}
-	//show_alloc_mem();
+	}*/
 
-	/*char *ptr = malloc(1);
-	ptr[0] = 'a';
-	printf("%s\n", ptr);*/
+	char	*addr;
+	char	*test;
+
+	addr = malloc(16);
+	printf("%p\n", addr);
+	free(NULL);
+	free((void *)addr + 5);
+	test = realloc((void *)addr + 5, 10);
+	printf("%p\n", test);
+	if (test == NULL)
+		printf("Bonjours\n");
 
 	return 0;
 }
