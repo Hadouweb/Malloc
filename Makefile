@@ -1,26 +1,30 @@
 CC = gcc
 FLAG = -Werror -Wextra -Wall -g
-LIBFTPATH = ./libft
 
-HEADER = -I $(LIBFTPATH)/includes
+LIBFT_PATH = ./libft
+SRCS_PATH = ./srcs
+INC_PATH = ./includes
 
-LIB = -L$(LIBFTPATH) -lft
-LIBNAME = $(LIBFTPATH)/libft.a
+HEADER = -I $(LIBFT_PATH)/includes -I $(INC_PATH)
 
-SRC =   malloc.c\
-        debug.c\
-        alloc_tiny.c\
-        alloc_small.c\
-        alloc_large.c\
-        error.c\
-        get_tiny.c\
-        get_small.c\
-        get_large.c\
-        show_alloc.c\
-        util.c\
-        free.c\
-        find_ptr.c\
-        realloc.c\
+LIB = -L$(LIBFT_PATH) -lft
+LIBNAME = $(LIBFT_PATH)/libft.a
+
+SRC =   $(SRCS_PATH)/malloc.c\
+        $(SRCS_PATH)/debug.c\
+        $(SRCS_PATH)/alloc_tiny.c\
+        $(SRCS_PATH)/alloc_small.c\
+        $(SRCS_PATH)/alloc_large.c\
+        $(SRCS_PATH)/error.c\
+        $(SRCS_PATH)/get_tiny.c\
+        $(SRCS_PATH)/get_small.c\
+        $(SRCS_PATH)/get_large.c\
+        $(SRCS_PATH)/show_alloc.c\
+        $(SRCS_PATH)/util.c\
+        $(SRCS_PATH)/free.c\
+        $(SRCS_PATH)/find_ptr.c\
+        $(SRCS_PATH)/realloc.c\
+        $(SRCS_PATH)/call_unsafe.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -40,18 +44,18 @@ $(NAME): $(LIBNAME) $(OBJ)
 	@ln -s $(NAME) $(LINK)
 
 $(LIBNAME):
-	@make -C $(LIBFTPATH) -j8
+	@make -C $(LIBFT_PATH) -j8
 
 %.o: %.c
 	@$(CC) -fPIC -o $@ -c $< $(HEADER)
 	@echo "\033[34m█\033[0m\c"
 
 clean:
-	@make -C $(LIBFTPATH) clean
+	@make -C $(LIBFT_PATH) clean
 	@rm -rf $(OBJ)
 
 fclean: clean
-	@make -C $(LIBFTPATH) fclean
+	@make -C $(LIBFT_PATH) fclean
 	@rm -rf $(NAME)
 	@rm -f $(LINK)
 

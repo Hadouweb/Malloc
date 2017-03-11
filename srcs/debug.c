@@ -1,4 +1,4 @@
-#include "malloc.h"
+#include "../includes/malloc.h"
 
 char	*debug_enum(enum e_type type) {
 	switch (type) {

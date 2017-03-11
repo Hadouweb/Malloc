@@ -18,10 +18,10 @@
 # include <sys/resource.h>
 # include <errno.h>
 # include <stdlib.h>
+# include <pthread.h>
 
 # include <stdio.h>
-# include "libft/includes/libft.h"
-
+# include "../libft/includes/libft.h"
 
 
 enum	e_type {
@@ -65,7 +65,8 @@ typedef struct		s_block {
 	uint32_t		size:31;
 }					t_block;
 
-typedef struct		s_tiny_region {
+typedef struct		s_tiny_region
+{
 	t_tiny_block	data[NUM_TINY_BLOCKS];
 	t_block			info_block[NUM_TINY_BLOCKS];
 	uint32_t 		current_index:16;
@@ -95,12 +96,27 @@ typedef struct		s_manager {
 }					t_manager;
 
 t_manager			g_manager;
+pthread_mutex_t		mutex;
 
 void				show_alloc_mem(void);
 void				show_alloc_mem_ex(void);
 void				free(void *ptr);
 void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);
+
+void 				*malloc_unsafe(size_t size);
+void				free_unsafe(void *ptr);
+
+void				*realloc_tiny_block(t_tiny_region *region,
+						void *ptr, size_t size);
+void				*realloc_small_block(t_small_region *region,
+						void *ptr, size_t size);
+void				*realloc_large_block(t_large_block *block,
+						void *ptr, size_t size);
+
+void 				show_tiny_region(t_link *list_region);
+void 				show_small_region(t_link *list_region);
+void 				show_large_block(t_link *list_region);
 
 void				free_tiny_block(t_tiny_region *region, void *ptr);
 void				free_small_block(t_small_region *region, void *ptr);
@@ -123,6 +139,7 @@ t_small_region		*alloc_small_region(void);
 t_large_block		*alloc_large_block(size_t size);
 
 void				print_addr(void *ptr);
+void 				print_ptr(void *start, size_t size);
 void				list_pop_node(t_list *list, t_link *link);
 void				list_push_back(t_list *list, t_link *link);
 

@@ -1,4 +1,4 @@
-#include "malloc.h"
+#include "../includes/malloc.h"
 
 static void		*find_ptr_small(t_small_region * r, size_t size) {
 	int 	current_index;
@@ -28,6 +28,7 @@ void			*get_ptr_small(size_t size) {
 	t_small_region 	*region;
 	void			*ptr;
 
+	region = NULL;
 	list_region = g_manager.small_list.head;
 	while (list_region)
 	{

@@ -1,4 +1,4 @@
-#include "malloc.h"
+#include "../includes/malloc.h"
 
 void		free_tiny_block(t_tiny_region *region, void *ptr)
 {
@@ -28,11 +28,8 @@ void		free_small_block(t_small_region *region, void *ptr)
 
 void		free_large_block(t_large_block *block, void *ptr)
 {
-	int ret;
-
 	list_pop_node(&g_manager.large_list, &block->link);
-	ret = munmap((void*)block,  PAD_GOAL(block->size + SIZE_LARGE_BLOCK));
-	//printf("munmap %d\n", ret);
+	munmap((void*)block,  PAD_GOAL(block->size + SIZE_LARGE_BLOCK));
 	(void)ptr;
 }
 
@@ -42,21 +39,15 @@ void		free(void *ptr)
 	t_small_region	*region_small;
 	t_large_block	*block_large;
 
-	if (ptr == NULL)
-		return ;
-	region_tiny = find_on_tiny(ptr);
-	if (region_tiny != NULL)
+	pthread_mutex_lock(&mutex);
+	if (ptr != NULL)
 	{
-		free_tiny_block(region_tiny, ptr);
-		return ;
+		if ((region_tiny = find_on_tiny(ptr)) != NULL)
+			free_tiny_block(region_tiny, ptr);
+		else if ((region_small = find_on_small(ptr)) != NULL)
+			free_small_block(region_small, ptr);
+		else if ((block_large = find_on_large(ptr)) != NULL)
+			free_large_block(block_large, ptr);
 	}
-	region_small = find_on_small(ptr);
-	if (region_small != NULL)
-	{
-		free_small_block(region_small, ptr);
-		return ;
-	}
-	block_large = find_on_large(ptr);
-	if (block_large != NULL)
-		free_large_block(block_large, ptr);
+	pthread_mutex_unlock(&mutex);
 }

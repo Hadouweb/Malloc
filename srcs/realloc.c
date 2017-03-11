@@ -1,6 +1,6 @@
-#include "malloc.h"
+#include "../includes/malloc.h"
 
-static void	*realloc_tiny_block(t_tiny_region *region, void *ptr, size_t size)
+void	*realloc_tiny_block(t_tiny_region *region, void *ptr, size_t size)
 {
 	int 	index;
 	void	*new_ptr;
@@ -14,7 +14,7 @@ static void	*realloc_tiny_block(t_tiny_region *region, void *ptr, size_t size)
 		region->info_block[index].size = size;
 		return ptr;
 	}
-	new_ptr = malloc(size);
+	new_ptr = malloc_unsafe(size);
 	min_size = (region->info_block[index].size < size) ?
 		region->info_block[index].size : size;
 	ft_memcpy(new_ptr, region->data[index], min_size);
@@ -22,7 +22,7 @@ static void	*realloc_tiny_block(t_tiny_region *region, void *ptr, size_t size)
 	return new_ptr;
 }
 
-static void	*realloc_small_block(t_small_region *region, void *ptr, size_t size)
+void	*realloc_small_block(t_small_region *region, void *ptr, size_t size)
 {
 	int 	index;
 	void	*new_ptr;
@@ -36,7 +36,7 @@ static void	*realloc_small_block(t_small_region *region, void *ptr, size_t size)
 		region->info_block[index].size = size;
 		return ptr;
 	}
-	new_ptr = malloc(size);
+	new_ptr = malloc_unsafe(size);
 	min_size = (region->info_block[index].size < size) ?
 			   region->info_block[index].size : size;
 	ft_memcpy(new_ptr, region->data[index], min_size);
@@ -44,39 +44,43 @@ static void	*realloc_small_block(t_small_region *region, void *ptr, size_t size)
 	return new_ptr;
 }
 
-static void	*realloc_large_block(t_large_block *block, void *ptr, size_t size)
+void	*realloc_large_block(t_large_block *block, void *ptr, size_t size)
 {
 	void	*new_ptr;
 	size_t 	min_size;
 
-	new_ptr = malloc(size);
+	new_ptr = malloc_unsafe(size);
 	min_size = (block->size < size) ? block->size : size;
 	ft_memcpy(new_ptr, block->data, min_size);
 	free_large_block(block, ptr);
 	return new_ptr;
 }
 
-void		*realloc(void *ptr, size_t size)
+void	*realloc(void *ptr, size_t size)
 {
 	t_tiny_region	*region_tiny;
 	t_small_region	*region_small;
 	t_large_block	*block_large;
+	void			*ptr_ret;
 
+	ptr_ret = ptr;
+	pthread_mutex_lock(&mutex);
 	if (ptr == NULL)
-		return malloc(size);
+		ptr_ret = malloc_unsafe(size);
 	else if (size == 0)
-		free(ptr);
+		free_unsafe(ptr);
 	else
 	{
 		region_tiny = find_on_tiny(ptr);
 		if (region_tiny != NULL)
-			return realloc_tiny_block(region_tiny, ptr, size);
+			ptr_ret = realloc_tiny_block(region_tiny, ptr, size);
 		region_small = find_on_small(ptr);
 		if (region_small != NULL)
-			return realloc_small_block(region_small, ptr, size);
+			ptr_ret = realloc_small_block(region_small, ptr, size);
 		block_large = find_on_large(ptr);
 		if (block_large != NULL)
-			return realloc_large_block(block_large, ptr, size);
+			ptr_ret = realloc_large_block(block_large, ptr, size);
 	}
-	return NULL;
+	pthread_mutex_unlock(&mutex);
+	return ptr_ret;
 }

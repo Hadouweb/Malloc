@@ -1,4 +1,4 @@
-#include "malloc.h"
+#include "../includes/malloc.h"
 
 t_small_region		*load_small_region(void) {
 	t_small_region	*small_region;

@@ -1,5 +1,6 @@
-#include "../malloc.h"
-//#include <stdlib.h>
+//#include "../malloc.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 #define M1 (1024 * 1024)
 
@@ -23,7 +24,7 @@ int		main(void) {
 	printf("RUN\n");*/
 
 	//printf("%ld\n", 0x106815280 - 0x106721028);
-	int i = 0;
+	/*int i = 0;
 	while (i < 1000000) {
 		char *ptr = malloc(1025);
 		ptr[1024] = 42;
@@ -33,6 +34,14 @@ int		main(void) {
 		i++;
 	}
 
+	show_alloc_mem();*/
+
+	int i = 0;
+	while (i < 1024) {
+		char *ptr = malloc(2000);
+		ptr[i] = 'a';
+		i++;
+	}
 	show_alloc_mem();
 
 	return 0;

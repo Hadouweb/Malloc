@@ -3,30 +3,29 @@ project(malloc)
 
 set(CMAKE_CXX_STANDARD 11)
 
+include_directories(includes)
 add_subdirectory(libft)
 
 set(SRCS
-    main.c
-    malloc.c
-    debug.c
-    alloc_tiny.c
-    alloc_small.c
-    alloc_large.c
-    error.c
-    get_tiny.c
-    get_small.c
-    get_large.c
-    show_alloc.c
-    util.c
-    free.c
-    find_ptr.c
-    realloc.c
+    srcs/malloc.c
+    srcs/debug.c
+    srcs/alloc_tiny.c
+    srcs/alloc_small.c
+    srcs/alloc_large.c
+    srcs/error.c
+    srcs/get_tiny.c
+    srcs/get_small.c
+    srcs/get_large.c
+    srcs/show_alloc.c
+    srcs/util.c
+    srcs/free.c
+    srcs/find_ptr.c
+    srcs/realloc.c
+    srcs/call_unsafe.c
     )
 
-set(HEADERS
-        malloc.h
-    )
+set(HEADERS includes/malloc.h)
 
-add_executable(malloc ${SRCS} ${HEADERS})
+add_library(ft_malloc ${SRCS} ${HEADERS})
 
-target_link_libraries(malloc ft)
+target_include_directories(ft_malloc PUBLIC ./includes)

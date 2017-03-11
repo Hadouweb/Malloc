@@ -1,4 +1,4 @@
-#include "malloc.h"
+#include "../includes/malloc.h"
 
 static int	ft_ull_len(unsigned long long value, int base)
 {
@@ -75,3 +75,17 @@ void	list_pop_node(t_list *list, t_link *link)
 		next->prev = prev;
 	list->size--;
 }
+
+void 	print_ptr(void *start, size_t size)
+{
+	print_addr(start);
+	ft_putstr(" - ");
+	print_addr(start + size);
+	ft_putstr(" : ");
+	ft_putnbr(size);
+	if (size == 1)
+		ft_putstr(" octet\n");
+	else
+		ft_putstr(" octets\n");
+}
+
