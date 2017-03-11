@@ -30,6 +30,21 @@ enum	e_type {
 	LARGE
 };
 
+/*
+ * BONUS DEBUG
+ *
+ * void				show_alloc_mem_ex(void);
+ * void				show_alloc_mem_bit(void);
+ * void				show_ptr_bit(void *ptr, size_t size);
+ * void				show_ptr_ex(void *ptr, size_t size);
+ */
+
+# define MAX_SIZE_BYTE_SHOW 16
+
+/*
+ * END BONUS
+ */
+
 # define MAGIC_PROT (1 << 31)
 # define SIZE_TINY_BLOCK 1024
 # define SIZE_SMALL_BLOCK 32768
@@ -100,9 +115,16 @@ pthread_mutex_t		mutex;
 
 void				show_alloc_mem(void);
 void				show_alloc_mem_ex(void);
+void				show_alloc_mem_bit(void);
+void				show_ptr_bit(void *ptr, size_t size);
+void				show_ptr_ex(void *ptr, size_t size);
 void				free(void *ptr);
 void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);
+
+void 				loop_tiny_block(void (*f)(const void*, size_t));
+void 				loop_small_block(void (*f)(const void*, size_t));
+void 				loop_large_block(void (*f)(const void*, size_t));
 
 void 				*malloc_unsafe(size_t size);
 void				free_unsafe(void *ptr);

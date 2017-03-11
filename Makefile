@@ -25,6 +25,8 @@ SRC =   $(SRCS_PATH)/malloc.c\
         $(SRCS_PATH)/find_ptr.c\
         $(SRCS_PATH)/realloc.c\
         $(SRCS_PATH)/call_unsafe.c\
+        $(SRCS_PATH)/show_alloc_mem_ex.c\
+        $(SRCS_PATH)/show_ptr.c\
 
 OBJ = $(SRC:.c=.o)
 

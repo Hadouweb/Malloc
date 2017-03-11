@@ -22,6 +22,8 @@ set(SRCS
     srcs/find_ptr.c
     srcs/realloc.c
     srcs/call_unsafe.c
+    srcs/show_alloc_mem_ex.c
+    srcs/show_ptr.c
     )
 
 set(HEADERS includes/malloc.h)

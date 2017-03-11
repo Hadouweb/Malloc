@@ -1,4 +1,4 @@
-//#include "../malloc.h"
+#include "../includes/malloc.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -36,13 +36,18 @@ int		main(void) {
 
 	show_alloc_mem();*/
 
-	int i = 0;
-	while (i < 1024) {
-		char *ptr = malloc(2000);
+	/*int i = 0;
+	while (i < 10) {
+		char *ptr = malloc(1);
 		ptr[i] = 'a';
 		i++;
-	}
-	show_alloc_mem();
+	}*/
+	char *ptr = malloc(2000);
+	ptr[0] = 42;
+	//show_ptr_bit(ptr, 10);
+	//show_ptr_ex(ptr, 32);
+	//show_alloc_mem_bit();
+	//show_alloc_mem();
 
 	return 0;
 }
