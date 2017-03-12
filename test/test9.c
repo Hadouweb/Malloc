@@ -1,43 +1,18 @@
 #include "../includes/malloc.h"
 
-# define N 100000
-
 int		main(void)
 {
-	int i = 0;
-	char *ptr[N];
+	char *ptr = malloc(100);
+	strcpy(ptr, "Bonjour");
+	show_ptr_bit(ptr, 10);
 
-	while (i < N)
-	{
-		ptr[i] = malloc(2000);
-		ptr[i][0] = 'a';
-		i++;
-	}
-	i = 0;
-	printf("Number region small after 100000 * 2000 malloc: %zu\n", get_size_region(SMALL));
+	int *ptr2 = malloc(10000);
+	ptr2[0] = 42;
+	show_ptr_bit(ptr2, 10);
 
-	while (i < N)
-	{
-		free(ptr[i]);
-		i++;
-	}
-	printf("Number region small after free all: %zu\n", get_size_region(SMALL));
+	uint64_t *ptr3 = malloc(100000);
+	ptr3[0] = 'a';
+	show_ptr_bit(ptr3, 10);
 
-	i = 0;
-	while (i < N)
-	{
-		ptr[i] = malloc(2000);
-		ptr[i][0] = 'a';
-		i++;
-	}
-	printf("Number region small after 100000 * 2000 malloc: %zu\n", get_size_region(SMALL));
-
-	i = 0;
-	while (i < N)
-	{
-		free(ptr[i]);
-		i++;
-	}
-	printf("Number region small after free all: %zu\n", get_size_region(SMALL));
 	return (0);
 }

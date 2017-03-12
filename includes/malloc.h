@@ -37,7 +37,7 @@ enum	e_type {
  * void				show_alloc_mem_bit(void);
  * void				show_ptr_bit(void *ptr, size_t size);
  * void				show_ptr_ex(void *ptr, size_t size);
- * HEADER GUARD tiny 1021952 | large = -SIZE_LARGE_BLOCK | small = 33554432
+ * HEADER GUARD tiny 1019904 | large = -SIZE_LARGE_BLOCK | small = 33554432
  * size_t			get_size_region(enum e_type t)
  */
 

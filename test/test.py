@@ -37,6 +37,11 @@ def cmd_output_only(com):
     output, errput = pipe.communicate()
     return output
 
+def cmd_errput_only(com):
+    pipe = cmd.Popen(com, stdout=cmd.PIPE, stderr=cmd.PIPE)
+    output, errput = pipe.communicate()
+    return errput
+
 def cmp_output(prog, to_compare):
     com = "./run.sh ./" + bin_folder + prog
     output = cmd_output(com.split())
@@ -122,3 +127,47 @@ cmd.call(com.split())
 com = "./run.sh ./" + bin_folder + "test5"
 output = cmd_output_only(com.split())
 print(output)
+
+'''
+print("#####Test header guard")
+com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test7" + " " + "test7.c" + " -lft_malloc"
+cmd.call(com.split())
+com = "./run.sh ./" + bin_folder + "test7"
+output = cmd_errput_only(com.split())
+print(output)
+
+print("#####Test bonus ex et realloc")
+com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test8" + " " + "test8.c" + " -lft_malloc"
+cmd.call(com.split())
+com = "./run.sh ./" + bin_folder + "test8"
+output = cmd_output_only(com.split())
+print(output)
+
+print("#####Test bonus bit")
+com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test9" + " " + "test9.c" + " -lft_malloc"
+cmd.call(com.split())
+com = "./run.sh ./" + bin_folder + "test9"
+output = cmd_output_only(com.split())
+print(output)
+
+print("#####Test bonus ex all")
+com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test10" + " " + "test10.c" + " -lft_malloc"
+cmd.call(com.split())
+com = "./run.sh ./" + bin_folder + "test10"
+output = cmd_output_only(com.split())
+print(output)
+
+print("#####Test bonus bit all")
+com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test11" + " " + "test11.c" + " -lft_malloc"
+cmd.call(com.split())
+com = "./run.sh ./" + bin_folder + "test11"
+output = cmd_output_only(com.split())
+print(output)
+
+print("#####Test unmap")
+com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test20" + " " + "test20.c" + " -lft_malloc"
+cmd.call(com.split())
+com = "./run.sh ./" + bin_folder + "test20"
+output = cmd_output_only(com.split())
+print(output)
+'''
