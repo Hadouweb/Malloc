@@ -9,14 +9,15 @@ void	*realloc_tiny_block(t_tiny_region *region, void *ptr, size_t size)
 	index = (ptr - (void*)region) / SIZE_TINY_BLOCK;
 	if (region->data[index] != ptr)
 		return NULL;
-	if (size <= SIZE_TINY_BLOCK)
+	if (size <= SIZE_TINY_BLOCK &&
+		~region->header_guard == MAGIC_GUARD_RESOLVE)
 	{
 		region->info_block[index].size = size;
 		return ptr;
 	}
 	new_ptr = malloc_unsafe(size);
 	min_size = (region->info_block[index].size < size) ?
-		region->info_block[index].size : size;
+			   region->info_block[index].size : size;
 	ft_memcpy(new_ptr, region->data[index], min_size);
 	free_tiny_block(region, ptr);
 	return new_ptr;
@@ -31,7 +32,8 @@ void	*realloc_small_block(t_small_region *region, void *ptr, size_t size)
 	index = (ptr - (void*)region) / SIZE_SMALL_BLOCK;
 	if (region->data[index] != ptr)
 		return NULL;
-	if (size <= SIZE_SMALL_BLOCK)
+	if (size <= SIZE_SMALL_BLOCK &&
+		~region->header_guard == MAGIC_GUARD_RESOLVE)
 	{
 		region->info_block[index].size = size;
 		return ptr;
@@ -49,10 +51,15 @@ void	*realloc_large_block(t_large_block *block, void *ptr, size_t size)
 	void	*new_ptr;
 	size_t 	min_size;
 
+	if (size <= block->size)
+	{
+		block->size = size;
+		return block->data;
+	}
 	new_ptr = malloc_unsafe(size);
 	min_size = (block->size < size) ? block->size : size;
 	ft_memcpy(new_ptr, block->data, min_size);
-	free_large_block(block, ptr);
+	free_large_block(block);
 	return new_ptr;
 }
 

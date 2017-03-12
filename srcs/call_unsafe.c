@@ -27,6 +27,6 @@ void		free_unsafe(void *ptr)
 		else if ((region_small = find_on_small(ptr)) != NULL)
 			free_small_block(region_small, ptr);
 		else if ((block_large = find_on_large(ptr)) != NULL)
-			free_large_block(block_large, ptr);
+			free_large_block(block_large);
 	}
 }

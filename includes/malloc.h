@@ -37,6 +37,8 @@ enum	e_type {
  * void				show_alloc_mem_bit(void);
  * void				show_ptr_bit(void *ptr, size_t size);
  * void				show_ptr_ex(void *ptr, size_t size);
+ * HEADER GUARD tiny 1021952 | large = -SIZE_LARGE_BLOCK | small = 33554432
+ * size_t			get_size_region(enum e_type t)
  */
 
 # define MAX_SIZE_BYTE_SHOW 16
@@ -45,7 +47,8 @@ enum	e_type {
  * END BONUS
  */
 
-# define MAGIC_PROT (1 << 31)
+# define MAGIC_GUARD (1 << 31)
+# define MAGIC_GUARD_RESOLVE (~MAGIC_GUARD)
 # define SIZE_TINY_BLOCK 1024
 # define SIZE_SMALL_BLOCK 32768
 
@@ -83,6 +86,7 @@ typedef struct		s_block {
 typedef struct		s_tiny_region
 {
 	t_tiny_block	data[NUM_TINY_BLOCKS];
+	uint64_t 		header_guard;
 	t_block			info_block[NUM_TINY_BLOCKS];
 	uint32_t 		current_index:16;
 	uint32_t 		nb_used:16;
@@ -91,6 +95,7 @@ typedef struct		s_tiny_region
 
 typedef struct		s_small_region {
 	t_small_block	data[NUM_SMALL_BLOCKS];
+	uint64_t 		header_guard;
 	t_block			info_block[NUM_SMALL_BLOCKS];
 	uint32_t 		current_index:16;
 	uint32_t 		nb_used:16;
@@ -98,6 +103,7 @@ typedef struct		s_small_region {
 }					t_small_region;
 
 typedef struct		s_large_block {
+	uint64_t 		header_guard;
 	uint8_t			used;
 	size_t			size;
 	t_link			link;
@@ -142,7 +148,11 @@ void 				show_large_block(t_link *list_region);
 
 void				free_tiny_block(t_tiny_region *region, void *ptr);
 void				free_small_block(t_small_region *region, void *ptr);
-void				free_large_block(t_large_block *block, void *ptr);
+void				free_large_block(t_large_block *block);
+
+void				unmap_tiny_region(void);
+void				unmap_small_region(void);
+size_t				get_size_region(enum e_type t);
 
 void				*find_on_tiny(void *ptr);
 void				*find_on_small(void *ptr);
@@ -165,7 +175,7 @@ void 				print_ptr(void *start, size_t size);
 void				list_pop_node(t_list *list, t_link *link);
 void				list_push_back(t_list *list, t_link *link);
 
-void				error_exit(char *str);
+void				error(char *str);
 
 char				*debug_enum(enum e_type type);
 

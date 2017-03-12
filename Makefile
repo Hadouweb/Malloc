@@ -11,22 +11,18 @@ LIB = -L$(LIBFT_PATH) -lft
 LIBNAME = $(LIBFT_PATH)/libft.a
 
 SRC =   $(SRCS_PATH)/malloc.c\
-        $(SRCS_PATH)/debug.c\
-        $(SRCS_PATH)/alloc_tiny.c\
-        $(SRCS_PATH)/alloc_small.c\
-        $(SRCS_PATH)/alloc_large.c\
+        $(SRCS_PATH)/alloc.c\
         $(SRCS_PATH)/error.c\
-        $(SRCS_PATH)/get_tiny.c\
-        $(SRCS_PATH)/get_small.c\
-        $(SRCS_PATH)/get_large.c\
+        $(SRCS_PATH)/find_ptr.c\
         $(SRCS_PATH)/show_alloc.c\
         $(SRCS_PATH)/util.c\
         $(SRCS_PATH)/free.c\
-        $(SRCS_PATH)/find_ptr.c\
+        $(SRCS_PATH)/find_region.c\
         $(SRCS_PATH)/realloc.c\
         $(SRCS_PATH)/call_unsafe.c\
         $(SRCS_PATH)/show_alloc_mem_ex.c\
         $(SRCS_PATH)/show_ptr.c\
+        $(SRCS_PATH)/unmap.c\
 
 OBJ = $(SRC:.c=.o)
 

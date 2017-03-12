@@ -1,60 +1,93 @@
 #include "../includes/malloc.h"
 
-void		*find_on_tiny(void *ptr)
+static void		*find_ptr_tiny(t_tiny_region * r, size_t size)
 {
-	t_link		*link;
-	void		*start;
-	void		*end;
-
-	link = g_manager.tiny_list.head;
-	while (link)
+	while (r->current_index < NUM_TINY_BLOCKS)
 	{
-		t_tiny_region *region = PTR_NODE(link, t_tiny_region, link);
-		start = (void*)region;
-		end = (void*)region + sizeof(t_tiny_region);
-		if (ptr >= start && ptr <= end)
-			return region;
-		link = link->next;
-	}
-	return NULL;
-}
-
-void		*find_on_small(void *ptr)
-{
-	t_link		*link;
-	void		*start;
-	void		*end;
-
-	link = g_manager.small_list.head;
-	while (link)
-	{
-		t_small_region *region = PTR_NODE(link, t_small_region, link);
-		start = (void*)region;
-		end = (void*)region + sizeof(t_small_region);
-		if (ptr >= start && ptr <= end)
-			return region;
-		link = link->next;
-	}
-	return NULL;
-}
-
-
-void		*find_on_large(void *ptr)
-{
-	t_link		*link;
-	void		*start;
-
-	link = g_manager.large_list.head;
-	while (link)
-	{
-		t_large_block *block = PTR_NODE(link, t_large_block, link);
-		if (block->used == 1)
+		if (r->info_block[r->current_index].used == 0)
 		{
-			start = block->data;
-			if (ptr == start)
-				return block;
+			r->info_block[r->current_index].used = 1;
+			r->info_block[r->current_index].size = size;
+			r->nb_used++;
+			if (r->current_index + 1 == NUM_TINY_BLOCKS)
+				r->current_index = 0;
+			return r->data[r->current_index];
 		}
-		link = link->next;
+		r->current_index++;
 	}
 	return NULL;
+}
+
+void			*get_ptr_tiny(size_t size)
+{
+	t_link			*list_region;
+	t_tiny_region 	*region;
+	void			*ptr;
+
+	region = NULL;
+	list_region = g_manager.tiny_list.head;
+	while (list_region)
+	{
+		region = PTR_NODE(list_region, t_tiny_region, link);
+		if (region->nb_used + 1 < NUM_TINY_BLOCKS)
+			break;
+		list_region = list_region->next;
+	}
+
+	if (list_region == NULL)
+		region = load_tiny_region();
+	if (region == MAP_FAILED)
+		return NULL;
+	ptr = find_ptr_tiny(region, size);
+	return ptr;
+}
+
+static void		*find_ptr_small(t_small_region * r, size_t size)
+{
+	while (r->current_index < NUM_SMALL_BLOCKS)
+	{
+		if (r->info_block[r->current_index].used == 0)
+		{
+			r->info_block[r->current_index].used = 1;
+			r->info_block[r->current_index].size = size;
+			r->nb_used++;
+			if (r->current_index + 1 == NUM_SMALL_BLOCKS)
+				r->current_index = 0;
+			return r->data[r->current_index];
+		}
+		r->current_index++;
+	}
+	return NULL;
+}
+
+void			*get_ptr_small(size_t size)
+{
+	t_link			*list_region;
+	t_small_region 	*region;
+	void			*ptr;
+
+	region = NULL;
+	list_region = g_manager.small_list.head;
+	while (list_region)
+	{
+		region = PTR_NODE(list_region, t_small_region, link);
+		if (region->nb_used + 1 < NUM_SMALL_BLOCKS)
+			break;
+		list_region = list_region->next;
+	}
+	if (list_region == NULL)
+		region = load_small_region();
+	if (region == MAP_FAILED)
+		return NULL;
+	ptr = find_ptr_small(region, size);
+	return ptr;
+}
+
+void			*get_ptr_large(size_t size)
+{
+	t_large_block 	*block;
+
+	block = alloc_large_block(size);
+	list_push_back(&g_manager.large_list, &block->link);
+	return block->data;
 }

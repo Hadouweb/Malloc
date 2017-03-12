@@ -8,22 +8,18 @@ add_subdirectory(libft)
 
 set(SRCS
     srcs/malloc.c
-    srcs/debug.c
-    srcs/alloc_tiny.c
-    srcs/alloc_small.c
-    srcs/alloc_large.c
+    srcs/alloc.c
     srcs/error.c
-    srcs/get_tiny.c
-    srcs/get_small.c
-    srcs/get_large.c
+    srcs/find_ptr.c
     srcs/show_alloc.c
     srcs/util.c
     srcs/free.c
-    srcs/find_ptr.c
+    srcs/find_region.c
     srcs/realloc.c
     srcs/call_unsafe.c
     srcs/show_alloc_mem_ex.c
     srcs/show_ptr.c
+    srcs/unmap.c
     )
 
 set(HEADERS includes/malloc.h)

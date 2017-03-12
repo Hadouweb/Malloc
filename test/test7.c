@@ -2,12 +2,24 @@
 
 int		main(void)
 {
-	char	*addr1;
+	/*char *ptr_tiny = malloc(1);
+	ptr_tiny[1021952] = 'a';
+	ft_putstr("free ptr tiny : ");
+	realloc(ptr_tiny, 10);
+	//show_alloc_mem();*/
 
-	addr1 = (char*)malloc(32);
-	printf("addr = %p\n", addr1);
-	addr1 = (char*)realloc(addr1, 64);
-	printf("after realloc \naddr = %p\n", addr1);
-	show_alloc_mem();
+	/*char *ptr_small = malloc(2000);
+	ptr_small[33554432] = 'a';
+	ft_putstr("free ptr small : ");
+	free(ptr_small);*/
+	//show_alloc_mem();
+
+	/*char *ptr_large = malloc(200000);
+	ptr_large[-SIZE_LARGE_BLOCK] = 'a';
+	ft_putstr("free ptr large : ");
+	free(ptr_large);
+	realloc(ptr_large, 300000);
+	//show_alloc_mem();*/
+
 	return (0);
 }

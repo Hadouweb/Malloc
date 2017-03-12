@@ -7,6 +7,8 @@ static void		show_ptr_tiny(void (*f)(const void*, size_t),
 	size_t 	min_size;
 
 	index = (ptr - (void*)r) / SIZE_TINY_BLOCK;
+	if (r->info_block[index].used == 0)
+		return ;
 	min_size = (size > r->info_block[index].size) ? r->info_block[index].size
 		: size;
 	ft_putstr(
@@ -34,6 +36,8 @@ static void		show_ptr_small(void (*f)(const void*, size_t),
 	size_t 	min_size;
 
 	index = (ptr - (void*)r) / SIZE_SMALL_BLOCK;
+	if (r->info_block[index].used == 0)
+		return ;
 	min_size = (size > r->info_block[index].size) ? r->info_block[index].size
 		: size;
 	ft_putstr(
@@ -57,9 +61,11 @@ static void		show_ptr_small(void (*f)(const void*, size_t),
 static void		show_ptr_large(void (*f)(const void*, size_t),
 	t_large_block *b, void *ptr, size_t size)
 {
-	int 			index;
+	int		index;
 	size_t 	min_size;
 
+	if (b->used == 0)
+		return ;
 	min_size = (size > b->size) ? b->size : size;
 	ft_putstr(
 	C_CYAN("********************** LARGE BLOCK **********************\n"));
