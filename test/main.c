@@ -6,7 +6,7 @@
 #define M1 (1024 * 1024)
 
 int		main(void) {
-	t_tiny_region 	*p1;
+	/*t_tiny_region 	*p1;
 	t_small_region	*p2;
 
 	p1 = mmap(0, 4000, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
@@ -23,40 +23,20 @@ int		main(void) {
 	printf("sizeof pad small: %lu\n\n", PAD_SMALL);
 	printf("sizeof data tiny: %lu\n\n", sizeof(p1->data));
 
-	printf("RUN\n");
+	printf("RUN\n");*/
 
-	//printf("%ld\n", 0x106815280 - 0x106721028);
-	/*int i = 0;
-	while (i < 1000000) {
-		char *ptr = malloc(1025);
-		ptr[1024] = 42;
-		//free(ptr);
-		//char *ptr2 = malloc(5001);
-		//ptr2[5000] = 42;
+	int		i;
+	char	*addr;
+
+	i = 0;
+	while (i < 1024)
+	{
+		addr = (char*)malloc(1024);
+		addr[0] = 42;
 		i++;
 	}
-
-	show_alloc_mem();*/
-
-	/*int i = 0;
-	while (i < 10) {
-		char *ptr = malloc(1);
-		ptr[i] = 'a';
-		i++;
-	}*/
-	uint8_t *ptr = malloc(200);
-	ptr[1021952] = 42;
-	//show_ptr_ex(ptr, 32);
-	free(ptr);
-	/*uint64_t t = MAGIC_GUARD;
-	uint64_t tr = MAGIC_GUARD_RESOLVE;
-	printf("%llu\n", t);
-	printf("%llu\n", tr);
-	printf("a is %#" PRIx64 "\n", t);
-	printf("a is %#" PRIx64 "\n", tr);*/
-	//show_ptr_bit(ptr, 10);
-	//show_alloc_mem_bit();
-	//show_alloc_mem();
+	show_alloc_mem();
+	return (0);
 
 	return 0;
 }
