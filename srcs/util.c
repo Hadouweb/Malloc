@@ -29,7 +29,7 @@ static int	ft_ull_len(unsigned long long value, int base)
 
 void		print_addr(void *ptr)
 {
-	char			str[20];
+	static char		str[20];
 	int				size;
 	unsigned long	value;
 
