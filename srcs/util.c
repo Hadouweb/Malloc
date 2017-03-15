@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nle-bret <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/15 19:37:42 by nle-bret          #+#    #+#             */
+/*   Updated: 2017/03/15 19:37:43 by nle-bret         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/malloc.h"
 
 static int	ft_ull_len(unsigned long long value, int base)
@@ -15,12 +27,11 @@ static int	ft_ull_len(unsigned long long value, int base)
 	return (i);
 }
 
-void	print_addr(void *ptr)
+void		print_addr(void *ptr)
 {
 	char			str[20];
 	int				size;
-	int				sign;
-	unsigned long 	value;
+	unsigned long	value;
 
 	value = (unsigned long)ptr;
 	size = ft_ull_len(value, 16);
@@ -40,23 +51,7 @@ void	print_addr(void *ptr)
 	write(1, str, ft_strlen(str));
 }
 
-void	list_push_back(t_list *list, t_link *link)
-{
-	if (link == NULL)
-		return ;
-	if (list->head == NULL) {
-		list->head = link;
-		list->tail = link;
-		list->size++;
-		return ;
-	}
-	list->tail->next = link;
-	link->prev = list->tail;
-	list->tail = link;
-	list->size++;
-}
-
-void	list_pop_node(t_list *list, t_link *link)
+void		list_pop_node(t_list *list, t_link *link)
 {
 	t_link	*prev;
 	t_link	*next;
@@ -76,7 +71,7 @@ void	list_pop_node(t_list *list, t_link *link)
 	list->size--;
 }
 
-void 	print_ptr(void *start, size_t size)
+void		print_ptr(void *start, size_t size)
 {
 	print_addr(start);
 	ft_putstr(" - ");
@@ -88,4 +83,3 @@ void 	print_ptr(void *start, size_t size)
 	else
 		ft_putstr(" octets\n");
 }
-

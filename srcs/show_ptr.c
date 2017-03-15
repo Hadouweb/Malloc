@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show_ptr.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nle-bret <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/15 19:37:30 by nle-bret          #+#    #+#             */
+/*   Updated: 2017/03/15 19:37:32 by nle-bret         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 
 static void		show_ptr_tiny(void (*f)(const void*, size_t),
 	t_tiny_region *r, void *ptr, size_t size)
 {
 	int		index;
-	size_t 	min_size;
+	size_t	min_size;
 
 	index = (ptr - (void*)r) / SIZE_TINY_BLOCK;
 	if (r->info_block[index].used == 0)
@@ -32,8 +44,8 @@ static void		show_ptr_tiny(void (*f)(const void*, size_t),
 static void		show_ptr_small(void (*f)(const void*, size_t),
 	t_small_region *r, void *ptr, size_t size)
 {
-	int 	index;
-	size_t 	min_size;
+	int		index;
+	size_t	min_size;
 
 	index = (ptr - (void*)r) / SIZE_SMALL_BLOCK;
 	if (r->info_block[index].used == 0)
@@ -61,8 +73,7 @@ static void		show_ptr_small(void (*f)(const void*, size_t),
 static void		show_ptr_large(void (*f)(const void*, size_t),
 	t_large_block *b, void *ptr, size_t size)
 {
-	int		index;
-	size_t 	min_size;
+	size_t	min_size;
 
 	if (b->used == 0)
 		return ;

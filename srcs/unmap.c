@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unmap.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nle-bret <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/15 19:37:36 by nle-bret          #+#    #+#             */
+/*   Updated: 2017/03/15 19:37:37 by nle-bret         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/malloc.h"
 
 void	unmap_tiny_region(void)
 {
 	t_link			*list;
 	t_tiny_region	*region;
-	int 			token;
+	int				token;
 
 	token = 0;
 	list = g_manager.tiny_list.head;
@@ -27,7 +39,7 @@ void	unmap_small_region(void)
 {
 	t_link			*list;
 	t_small_region	*region;
-	int 			token;
+	int				token;
 
 	token = 0;
 	list = g_manager.small_list.head;
@@ -52,7 +64,7 @@ size_t	get_size_region(enum e_type t)
 		return (g_manager.tiny_list.size);
 	else if (t == SMALL)
 		return (g_manager.small_list.size);
-	else if (t ==  LARGE)
+	else if (t == LARGE)
 		return (g_manager.large_list.size);
-	return 0;
+	return (0);
 }

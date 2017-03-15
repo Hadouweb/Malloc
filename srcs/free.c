@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nle-bret <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/15 19:36:50 by nle-bret          #+#    #+#             */
+/*   Updated: 2017/03/15 19:36:52 by nle-bret         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/malloc.h"
 
 void		free_tiny_block(t_tiny_region *region, void *ptr)
 {
-	int 			index;
+	int		index;
 
 	index = (ptr - (void*)region) / SIZE_TINY_BLOCK;
 	if (region->data[index] != ptr)
@@ -20,7 +32,7 @@ void		free_tiny_block(t_tiny_region *region, void *ptr)
 
 void		free_small_block(t_small_region *region, void *ptr)
 {
-	int 			index;
+	int		index;
 
 	index = (ptr - (void*)region) / SIZE_SMALL_BLOCK;
 	if (region->data[index] != ptr)
@@ -53,7 +65,7 @@ void		free(void *ptr)
 	t_small_region	*region_small;
 	t_large_block	*block_large;
 
-	pthread_mutex_lock(&mutex);
+	pthread_mutex_lock(&g_mutex);
 	if (ptr != NULL)
 	{
 		if ((region_tiny = find_on_tiny(ptr)) != NULL)
@@ -63,5 +75,5 @@ void		free(void *ptr)
 		else if ((block_large = find_on_large(ptr)) != NULL)
 			free_large_block(block_large);
 	}
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&g_mutex);
 }

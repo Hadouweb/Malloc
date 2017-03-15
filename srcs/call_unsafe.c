@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   call_unsafe.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nle-bret <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/15 19:36:22 by nle-bret          #+#    #+#             */
+/*   Updated: 2017/03/15 19:36:23 by nle-bret         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 
-void 	*malloc_unsafe(size_t size)
+void	*malloc_unsafe(size_t size)
 {
 	void	*ptr;
 
@@ -11,10 +23,10 @@ void 	*malloc_unsafe(size_t size)
 		ptr = get_ptr_small(size);
 	else if (size > 0 && size > SIZE_SMALL_BLOCK)
 		ptr = get_ptr_large(size);
-	return ptr;
+	return (ptr);
 }
 
-void		free_unsafe(void *ptr)
+void	free_unsafe(void *ptr)
 {
 	t_tiny_region	*region_tiny;
 	t_small_region	*region_small;

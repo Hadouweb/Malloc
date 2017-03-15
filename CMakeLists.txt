@@ -4,7 +4,7 @@ project(malloc)
 set(CMAKE_CXX_STANDARD 11)
 
 include_directories(includes)
-add_subdirectory(libft)
+#add_subdirectory(libft)
 
 set(SRCS
     srcs/malloc.c

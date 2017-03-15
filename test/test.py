@@ -128,7 +128,7 @@ com = "./run.sh ./" + bin_folder + "test5"
 output = cmd_output_only(com.split())
 print(output)
 
-'''
+
 print("#####Test header guard")
 com = "gcc"+ " -L../ " + " -Wall -Wno-unused-result -o " + bin_folder + "test7" + " " + "test7.c" + " -lft_malloc"
 cmd.call(com.split())
@@ -170,4 +170,3 @@ cmd.call(com.split())
 com = "./run.sh ./" + bin_folder + "test20"
 output = cmd_output_only(com.split())
 print(output)
-'''

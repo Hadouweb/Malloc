@@ -1,6 +1,8 @@
 #include "../includes/malloc.h"
+#include <stdio.h>
 
 # define N 100000
+
 
 int		main(void)
 {

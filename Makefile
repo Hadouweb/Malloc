@@ -36,7 +36,7 @@ LINK = libft_malloc.so
 all: $(NAME)
 
 $(NAME): $(LIBNAME) $(OBJ)
-	@$(CC) -shared $(LIB) -o $(NAME) $^
+	@$(CC) $(FLAG) -shared $(LIB) -o $(NAME) $^
 	@echo "\n\033[39mCompilation done.\033[0m"
 	@rm -f $(LINK)
 	@ln -s $(NAME) $(LINK)
@@ -45,7 +45,7 @@ $(LIBNAME):
 	@make -C $(LIBFT_PATH) -j8
 
 %.o: %.c
-	@$(CC) -fPIC -o $@ -c $< $(HEADER)
+	@$(CC) $(FLAG) -fPIC -o $@ -c $< $(HEADER)
 	@echo "\033[34m█\033[0m\c"
 
 clean:
